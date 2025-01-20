@@ -1,20 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/authMiddleware.js');
+const { getWishlist, addToWishlist, removeFromWishlist } = require('../controllers/wishlistController.js'); // Import the wishlistController functions
+const { authMiddleware } = require('../middlewares/authMiddleware.js'); // Middleware for protected routes
 
 // Get wishlist
-router.get('/', authMiddleware, (req, res) => {
-  res.status(200).json({ wishlistItems: [{ productId: 1, addedAt: '2025-01-01' }] });
-});
+router.get('/', authMiddleware, getWishlist); // Call getWishlist function
 
 // Add item to wishlist
-router.post('/add', authMiddleware, (req, res) => {
-  res.status(201).json({ message: 'Item added to wishlist' });
-});
+router.post('/add', authMiddleware, addToWishlist); // Call addToWishlist function
 
 // Remove item from wishlist
-router.delete('/remove/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ message: 'Item removed from wishlist' });
-});
+router.delete('/remove/:id', authMiddleware, removeFromWishlist); // Call removeFromWishlist function
 
-module.exports = router;
+module.exports = { wishlistRoutes: router };

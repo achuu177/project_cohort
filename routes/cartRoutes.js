@@ -1,25 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/authMiddleware.js');
+const { getCart, addToCart, removeFromCart, updateCart } = require('../controllers/cartController.js'); // Import cart controller functions
+const authMiddleware = require('../middlewares/authMiddleware.js'); // Authentication middleware
 
-// Get cart
-router.get('/', authMiddleware, (req, res) => {
-  res.status(200).json({ cartItems: [{ productId: 1, quantity: 2 }] });
-});
+// Get cart (protected route)
+router.get('/', authMiddleware, getCart);
 
-// Add item to cart
-router.post('/add', authMiddleware, (req, res) => {
-  res.status(201).json({ message: 'Item added to cart' });
-});
+// Add item to cart (protected route)
+router.post('/add', authMiddleware, addToCart);
 
-// Update item in cart
-router.put('/update/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ message: 'Cart item updated' });
-});
+// Update item in cart (protected route)
+router.put('/update/:id', authMiddleware, updateCart);
 
-// Remove item from cart
-router.delete('/remove/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ message: 'Item removed from cart' });
-});
+// Remove item from cart (protected route)
+router.delete('/remove/:id', authMiddleware, removeFromCart);
 
-module.exports = router;
+module.exports = { cartRoutes : router };
+

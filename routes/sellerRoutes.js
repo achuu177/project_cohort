@@ -1,5 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const { 
+    getSellerProducts, 
+    addProduct, 
+    updateProduct, 
+    deleteProduct, 
+    getSellerOrders, 
+    updateOrderStatus 
+} = require('../controllers/sellerController.js');
 const authMiddleware = require('../middlewares/authMiddleware.js');
 const roleAuth = require('../middlewares/roleAuth.js');
 
@@ -7,40 +15,21 @@ const roleAuth = require('../middlewares/roleAuth.js');
 router.use(authMiddleware, roleAuth('Seller'));
 
 // Get all products managed by the seller
-router.get('/products', (req, res) => {
-  // Logic to fetch seller's products
-  res.status(200).json([{ id: 1, name: 'Seller Product A' }, { id: 2, name: 'Seller Product B' }]);
-});
+router.get('/products', getSellerProducts);
 
 // Add a new product
-router.post('/products', (req, res) => {
-  // Logic to add a product
-  res.status(201).json({ message: 'Product added successfully' });
-});
+router.post('/products', addProduct);
 
 // Update an existing product
-router.put('/products/:id', (req, res) => {
-  // Logic to update a product
-  res.status(200).json({ message: `Product ${req.params.id} updated successfully` });
-});
+router.put('/products/:id', updateProduct);
 
 // Delete a product
-router.delete('/products/:id', (req, res) => {
-  // Logic to delete a product
-  res.status(200).json({ message: `Product ${req.params.id} deleted successfully` });
-});
+router.delete('/products/:id', deleteProduct);
 
 // Get all orders related to the seller's products
-router.get('/orders', (req, res) => {
-  // Logic to fetch seller's orders
-  res.status(200).json([{ orderId: 1, totalAmount: 500 }, { orderId: 2, totalAmount: 300 }]);
-});
+router.get('/orders', getSellerOrders);
 
 // Update the status of an order
-router.put('/orders/:id/status', (req, res) => {
-  const { status } = req.body;
-  // Logic to update the order status
-  res.status(200).json({ message: `Order ${req.params.id} status updated to ${status}` });
-});
+router.put('/orders/:id/status', updateOrderStatus);
 
-module.exports = router;
+module.exports = { sellerRoutes: router };

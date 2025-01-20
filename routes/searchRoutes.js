@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { searchProducts } = require('../controllers/searchController.js');
 
-// Search for products
-router.get('/', (req, res) => {
-  res.status(200).json([{ id: 1, name: 'Laptop' }, { id: 2, name: 'Phone' }]);
-});
+// Search for products based on query
+router.get('/', searchProducts);
 
-module.exports = router;
+module.exports = { searchRoutes: router };
+

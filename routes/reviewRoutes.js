@@ -1,20 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware.js');
+const { addReview, getReviewsByProduct, deleteReview } = require('../controllers/reviewController.js');
 
-// Add a review
-router.post('/:productId', authMiddleware, (req, res) => {
-  res.status(201).json({ message: 'Review added successfully' });
-});
+// Add a review for a specific product
+router.post('/:productId', authMiddleware, addReview);
 
-// Get reviews for a product
-router.get('/:productId', (req, res) => {
-  res.status(200).json([{ userId: 1, rating: 5, comment: 'Great product!' }]);
-});
+// Get all reviews for a specific product
+router.get('/:productId', getReviewsByProduct);
 
-// Delete a review
-router.delete('/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ message: 'Review deleted successfully' });
-});
+// Delete a specific review by review ID
+router.delete('/:id', authMiddleware, deleteReview);
 
-module.exports = router;
+module.exports = { reviewRoutes: router };
+

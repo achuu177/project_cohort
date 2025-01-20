@@ -6,7 +6,9 @@ const {
     getUserProfile,
     userLogout,
 } = require('../controllers/userController.js'); // Import the userController functions
-const authMiddleware = require('../middlewares/authMiddleware.js'); // Middleware for protected routes
+const {authMiddleware} = require('../middlewares/authMiddleware.js'); // Middleware for protected routes
+
+
 
 // User signup
 router.post('/signup', userSignup);
@@ -20,5 +22,5 @@ router.get('/profile', authMiddleware, getUserProfile);
 // User logout
 router.post('/logout', authMiddleware, userLogout);
 
-module.exports = router;
+module.exports = { userRoutes: router };
 

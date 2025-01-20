@@ -1,30 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware.js');
+const { 
+  getProducts, 
+  getProductById, 
+  addProduct, 
+  updateProduct, 
+  deleteProduct 
+} = require('../controllers/productController.js');
 
 // Get all products
-router.get('/', (req, res) => {
-  res.status(200).json([{ id: 1, name: 'Product A' }, { id: 2, name: 'Product B' }]);
-});
+router.get('/', getProducts);
 
 // Get a specific product
-router.get('/:id', (req, res) => {
-  res.status(200).json({ id: req.params.id, name: 'Product A', price: 100 });
-});
+router.get('/:id', getProductById);
 
 // Add a new product
-router.post('/', authMiddleware, (req, res) => {
-  res.status(201).json({ message: 'Product added successfully' });
-});
+router.post('/', authMiddleware, addProduct);
 
 // Update a product
-router.put('/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ message: 'Product updated successfully' });
-});
+router.put('/:id', authMiddleware, updateProduct);
 
 // Delete a product
-router.delete('/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ message: 'Product deleted successfully' });
-});
+router.delete('/:id', authMiddleware, deleteProduct);
 
-module.exports = router;
+module.exports = { productRoutes: router };

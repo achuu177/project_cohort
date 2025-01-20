@@ -1,20 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware.js');
+const {
+    createOrder,
+    getOrders,
+    updateOrderStatus
+} = require('../controllers/orderController.js'); // Import the orderController functions
 
-// Place an order
-router.post('/', authMiddleware, (req, res) => {
-  res.status(201).json({ message: 'Order placed successfully', orderId: 123 });
-});
+// Place an order (POST)
+router.post('/', authMiddleware, createOrder);
 
-// Get orders for user
-router.get('/', authMiddleware, (req, res) => {
-  res.status(200).json([{ orderId: 1, total: 200 }, { orderId: 2, total: 300 }]);
-});
+// Get all orders for the logged-in user (GET)
+router.get('/', authMiddleware, getOrders);
 
-// Update order status
-router.put('/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ message: 'Order status updated successfully' });
-});
+// Update order status (PUT)
+router.put('/:id', authMiddleware, updateOrderStatus);
 
-module.exports = router;
+module.exports = { orderRoutes: router };

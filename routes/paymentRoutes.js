@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware.js');
+const {
+    processPayment,
+    getPaymentDetails
+} = require('../controllers/paymentController.js'); // Import the paymentController functions
 
-// Process payment
-router.post('/', authMiddleware, (req, res) => {
-  res.status(201).json({ message: 'Payment processed successfully', paymentId: 456 });
-});
+// Process payment (POST)
+router.post('/', authMiddleware, processPayment);
 
-// Get payment details
-router.get('/:id', authMiddleware, (req, res) => {
-  res.status(200).json({ paymentId: req.params.id, status: 'Completed' });
-});
+// Get payment details (GET)
+router.get('/:id', authMiddleware, getPaymentDetails);
 
-module.exports = router;
+module.exports = { paymentRoutes: router };

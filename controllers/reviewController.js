@@ -35,3 +35,23 @@ exports.getReviewsByProduct = async (req, res) => {
         res.status(500).json({ message: "Failed to retrieve reviews. Please try again later." });
     }
 };
+
+exports.deleteReview = async (req, res) => {
+    try {
+        const review = await Review.findById(req.params.id);
+
+        if (!review) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+
+        // Check if the logged-in user is the one who created the review or if the user is an admin
+        if (review.userId.toString() !== req.user.id && !req.user.isAdmin) {
+            return res.status(403).json({ message: "You are not authorized to delete this review" });
+        }
+
+        await review.remove();
+        res.status(200).json({ message: "Review deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to delete review. Please try again later." });
+    }
+};

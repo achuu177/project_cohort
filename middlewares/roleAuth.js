@@ -1,20 +1,29 @@
-const roleAuth = (requiredRole) => {
-    return (req, res, next) => {
-        try {
-            const user = req.user; // Extract user from `userAuth` middleware
+const jwt = require("jsonwebtoken");
 
-            if (!user || user.role !== requiredRole) {
-                return res.status(403).json({ message: "Access denied", success: false });
-            }
+export const roleAuth = (req, res, next) => {
+    try {
+        const { token } = req.cookies;
 
-            next(); // Role matches, proceed to the next middleware/handler
-        } catch (error) {
-            return res.status(500).json({
-                message: error.message || "Authorization failed",
-                success: false,
-            });
+        if (!token) {
+            return res.status(401).json({ message: "user not autherised", success: false });
         }
-    };
+
+        const tokenVerified = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        
+        if (!tokenVerified) {
+            return res.status(401).json({ message: "user not autherised", success: false });
+        }
+        
+        if(tokenVerified.role != 'Seller' && tokenVerified.role !='admin'){
+            return res.status(401).json({ message: "user not autherised", success: false });
+        }
+
+        req.user = tokenVerified;
+
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: error.message || "user autherization failed", success: false });
+    }
 };
 
-module.exports = { roleAuth };
+
