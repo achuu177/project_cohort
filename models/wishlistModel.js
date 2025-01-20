@@ -16,4 +16,6 @@ const wishlistSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Wishlist', wishlistSchema);
+const Wishlist = mongoose.model('Wishlist', wishlistSchema);
+
+module.exports = { Wishlist };
