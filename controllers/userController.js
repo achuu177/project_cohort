@@ -10,10 +10,10 @@ const userSignup = async (req, res) => {
     try {
         console.log("Signup request body:", req.body);
         
-        const { name, email, password, mobile, profilePic } = req.body;
+        const { username, email, password, mobile, role, profilePic } = req.body;
 
         // Check for required fields
-        if (!name || !email || !password || !mobile) {
+        if (!username || !email || !password || !mobile || !role) {
             console.log("Missing required fields");
             return res.status(400).json({ message: "All fields are required" });
         }
@@ -31,18 +31,20 @@ const userSignup = async (req, res) => {
 
         // Create a new user
         console.log("Creating user...");
-        const user = new User({ name, email, password: hashedPassword, mobile, profilePic });
+        const user = new User({ username, email, password: hashedPassword, mobile, role, profilePic });
         console.log("Saving user to database...");
         await user.save();
 
         // Generate token
         console.log("Generating token...");
         const token = generateToken(user._id, user.role);
-
+        res.cookie("token", token);
+        
         // Return success response
         console.log("User created successfully");
         res.status(201).json({ message: "User account created successfully", user, token });
     } catch (error) {
+        console.error("Error during userSignup:", error.message);
         res.status(500).json({ message: "Failed to create user account. Please try again later." });
     }
 };
@@ -71,6 +73,7 @@ const userLogin = async (req, res) => {
 
         // Generate token
         const token = generateToken(user._id, user.role);
+        res.cookie("token", token);
 
         // Return success response
         res.status(200).json({ message: "Login successful", user, token });

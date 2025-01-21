@@ -14,7 +14,7 @@ export const roleAuth = (req, res, next) => {
             return res.status(401).json({ message: "user not autherised", success: false });
         }
         
-        if(tokenVerified.role != 'Seller' && tokenVerified.role !='admin'){
+        if(tokenVerified.role != 'Seller' && tokenVerified.role !='Admin'){
             return res.status(401).json({ message: "user not autherised", success: false });
         }
 

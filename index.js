@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv')
 const userRoutes = require('./routes/userRoutes'); 
 
+
 const app = express();
 app.use(express.json())
 app.use(cookieParser())
@@ -30,6 +31,8 @@ app.get('/test', (req, res) => {
 
   
   app.use('/api/users', userRoutes);
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
