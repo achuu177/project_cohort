@@ -2,7 +2,7 @@ const express = require('express')
 const cookieParser = require("cookie-parser");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv')
-const { apiRouter } = require("./routes/index.js");
+const userRoutes = require('./routes/userRoutes'); 
 
 const app = express();
 app.use(express.json())
@@ -28,7 +28,8 @@ app.get('/test', (req, res) => {
     res.send('test')
   })
 
-  app.use("/api", apiRouter);
+  
+  app.use('/api/users', userRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

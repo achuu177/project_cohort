@@ -12,4 +12,4 @@ router.post('/', authMiddleware, processPayment);
 // Get payment details (GET)
 router.get('/:id', authMiddleware, getPaymentDetails);
 
-module.exports = { paymentRoutes: router };
+module.exports =  router ;

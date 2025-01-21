@@ -12,4 +12,4 @@ router.post('/add', authMiddleware, addToWishlist); // Call addToWishlist functi
 // Remove item from wishlist
 router.delete('/remove/:id', authMiddleware, removeFromWishlist); // Call removeFromWishlist function
 
-module.exports = { wishlistRoutes: router };
+module.exports = router ;

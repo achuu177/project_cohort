@@ -22,5 +22,5 @@ router.get('/profile', authMiddleware, getUserProfile);
 // User logout
 router.post('/logout', authMiddleware, userLogout);
 
-module.exports = { userRoutes: router };
+module.exports = router ;
 

@@ -12,5 +12,5 @@ router.get('/:productId', getReviewsByProduct);
 // Delete a specific review by review ID
 router.delete('/:id', authMiddleware, deleteReview);
 
-module.exports = { reviewRoutes: router };
+module.exports = router ;
 

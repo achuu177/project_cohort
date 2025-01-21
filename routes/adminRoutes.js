@@ -20,5 +20,5 @@ router.get('/stats', authMiddleware, roleAuth('Admin'), (req, res) => {
     res.status(200).json({ totalUsers: 100, totalOrders: 500, revenue: 10000 });
 });
 
-module.exports = {adminRoutes : router};
+module.exports =  router;
 

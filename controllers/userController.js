@@ -8,30 +8,39 @@ const { generateToken } = require('../utils/token.js');
 // User Signup
 const userSignup = async (req, res) => {
     try {
+        console.log("Signup request body:", req.body);
+        
         const { name, email, password, mobile, profilePic } = req.body;
 
         // Check for required fields
         if (!name || !email || !password || !mobile) {
+            console.log("Missing required fields");
             return res.status(400).json({ message: "All fields are required" });
         }
 
         // Check if user already exists
         const userExist = await User.findOne({ email });
         if (userExist) {
+            console.log("User already exists with email:", email);
             return res.status(400).json({ message: "User already exists" });
         }
 
         // Hash the password
-        const hashedPassword = bcrypt.hashSync(password, 10);
+        console.log("Hashing password...");
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user
+        console.log("Creating user...");
         const user = new User({ name, email, password: hashedPassword, mobile, profilePic });
+        console.log("Saving user to database...");
         await user.save();
 
         // Generate token
+        console.log("Generating token...");
         const token = generateToken(user._id, user.role);
 
         // Return success response
+        console.log("User created successfully");
         res.status(201).json({ message: "User account created successfully", user, token });
     } catch (error) {
         res.status(500).json({ message: "Failed to create user account. Please try again later." });
@@ -55,7 +64,7 @@ const userLogin = async (req, res) => {
         }
 
         // Compare passwords
-        const isMatch = bcrypt.compareSync(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
@@ -93,6 +102,7 @@ const userLogout = async (req, res) => {
         res.clearCookie('token');
         res.status(200).json({ message: "Logout successful" });
     } catch (error) {
+        
         res.status(500).json({ message: "Failed to logout. Please try again later." });
     }
 };

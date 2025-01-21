@@ -32,4 +32,4 @@ router.get('/orders', getSellerOrders);
 // Update the status of an order
 router.put('/orders/:id/status', updateOrderStatus);
 
-module.exports = { sellerRoutes: router };
+module.exports =  router ;

@@ -16,4 +16,4 @@ router.get('/', authMiddleware, getOrders);
 // Update order status (PUT)
 router.put('/:id', authMiddleware, updateOrderStatus);
 
-module.exports = { orderRoutes: router };
+module.exports =  router ;

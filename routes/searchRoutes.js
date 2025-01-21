@@ -5,5 +5,5 @@ const { searchProducts } = require('../controllers/searchController.js');
 // Search for products based on query
 router.get('/', searchProducts);
 
-module.exports = { searchRoutes: router };
+module.exports = router ;
 

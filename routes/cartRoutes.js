@@ -15,5 +15,5 @@ router.put('/update/:id', authMiddleware, updateCart);
 // Remove item from cart (protected route)
 router.delete('/remove/:id', authMiddleware, removeFromCart);
 
-module.exports = { cartRoutes : router };
+module.exports = router ;
 

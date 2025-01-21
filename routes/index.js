@@ -12,7 +12,7 @@ const searchRoutes = require("./searchRoutes.js");
 
 const router = express.Router();
 
-router.use("/users", userRoutes);
+router.use('/users', userRoutes);
 router.use("/products", productRoutes);
 router.use("/cart", cartRoutes); 
 router.use("/wishlist", wishlistRoutes);
@@ -23,4 +23,4 @@ router.use("/seller", sellerRoutes);
 router.use("/reviews", reviewRoutes); 
 router.use("/search", searchRoutes);  
 
-module.exports = { apiRouter: router };
+module.exports = router ;
