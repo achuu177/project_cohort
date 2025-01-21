@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const userRoutes = require('./routes/userRoutes'); 
 
 
+
 const app = express();
 app.use(express.json())
 app.use(cookieParser())
@@ -14,7 +15,7 @@ dotenv.config("./.env")
 
 const dbpassword = process.env.DB_PASSWORD
 
-mongoose.connect(`mongodb+srv://aswathi:${dbpassword}@cluster.vxpxz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster`)
+mongoose.connect(`mongodb+srv://aswathikp120:${dbpassword}@cluster0.cpkni.mongodb.net/`)
 .then(res=>{
   console.log("DB connected successfully")
 }).catch(err=>{
@@ -31,6 +32,9 @@ app.get('/test', (req, res) => {
 
   
   app.use('/api/users', userRoutes);
+  
+
+  
 
 
 
